@@ -18,10 +18,9 @@ public class MultiServer {
         int portNumber = Integer.parseInt(args[0]);
         boolean listening = true;   
         
-        BookCollection.getInstance().addBook(new Book("Ray Bradbury", "Dandellion Wine", 1957));
-        BookCollection.getInstance().addBook(new Book("George Orwell", "1984", 1949));
-        BookCollection.getInstance().addBook(new Book("Ayn Rand", "Atlas Shrugged", 1957));
-        System.out.println(BookCollection.getInstance().getBookList());
+        BookCollection.getInstance().addBook(new Book(1, "Ray Bradbury", "Dandellion Wine", 1957));
+        BookCollection.getInstance().addBook(new Book(2, "George Orwell", "1984", 1949));
+        BookCollection.getInstance().addBook(new Book(3, "Ayn Rand", "Atlas Shrugged", 1957));
         
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
             System.out.println("Server started at port: " + portNumber);

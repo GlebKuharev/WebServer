@@ -1,6 +1,6 @@
 package com.epam.dao;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,7 +20,7 @@ public class BookCollection {
     private static final BookCollection instance = new BookCollection();
     
 	private BookCollection() {
-		bookList = new ArrayList<>();
+		bookList = new LinkedList<>();
 	}
 
     public static BookCollection getInstance(){

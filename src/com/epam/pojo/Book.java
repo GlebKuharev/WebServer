@@ -1,11 +1,13 @@
 package com.epam.pojo;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Book {
 	
+	private int id;
 	private String author;
 	private String title;
 	private int releaseDate;
@@ -14,8 +16,9 @@ public class Book {
 		super();
 	}
 	
-	public Book(String author, String title, int releaseDate) {
+	public Book(int id, String author, String title, int releaseDate) {
 		super();
+		this.setId(id);
 		this.author = author;
 		this.title = title;
 		this.releaseDate = releaseDate;
@@ -50,7 +53,16 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [author=" + author + ", title=" + title + ", releaseDate=" + releaseDate + "]";
+		return "Book [id=" + id + ", author=" + author + ", title=" + title + ", releaseDate=" + releaseDate + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+	
+	@XmlAttribute
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
