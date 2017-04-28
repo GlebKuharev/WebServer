@@ -1,4 +1,4 @@
-package com.epam.service;
+package com.epam.service.exception;
 
 public class HttpFormatException extends Exception {
 	

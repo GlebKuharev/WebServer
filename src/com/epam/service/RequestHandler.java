@@ -18,7 +18,7 @@ public class RequestHandler {
 		String requestLine = parsedRequest.getRequestLine();
 		String path = parsedRequest.parseUri(requestLine);
 
-		if (requestLine.startsWith(SupportedMethods.GET) && path.contains("/book")) {
+		if (requestLine.startsWith(SupportedMethods.GET)) {
 
 			switch (path) {
 			case "/book":
@@ -38,8 +38,9 @@ public class RequestHandler {
 				break;
 			default:
 				Response response = new Response(out);
-				response.setStatusCode(501);
+				response.setStatusCode(404);
 				response.send();
+				break;
 			}
 
 		} else if (requestLine.startsWith(SupportedMethods.POST)) {
@@ -56,14 +57,13 @@ public class RequestHandler {
 						iter.add(book);
 						response.setStatusCode(200);
 						response.send();
-						System.out.println(BookCollection.getInstance().getBookList());
 						return;
 					}
 				}
 				response.setStatusCode(400);
 				response.send();
 			}
-			if (parsedRequest.getHeaderParam("Content-Type").contains("application/json")) {
+			else if (parsedRequest.getHeaderParam("Content-Type").contains("application/json")) {
 				Response response = new Response(out);
 				Book book = JsonHelper.toObject(parsedRequest.getMessageBody());
 				int param_id = book.getId();
@@ -81,7 +81,11 @@ public class RequestHandler {
 				response.setStatusCode(400);
 				response.send();
 			}
-			
+			else {
+				Response response = new Response(out);
+				response.setStatusCode(400);
+				response.send();
+			}
 
 		} else if (requestLine.startsWith(SupportedMethods.PUT)) {
 
@@ -97,14 +101,14 @@ public class RequestHandler {
 				}
 				if (flag) {
 					BookCollection.getInstance().addBook(newBook);
-					response.setStatusCode(200);
+					response.setStatusCode(201);
 				}
 				else {
 					response.setStatusCode(400);
 				}
 				response.send();
 			}
-			if (parsedRequest.getHeaderParam("Content-Type").contains("application/json")) {
+			else if (parsedRequest.getHeaderParam("Content-Type").contains("application/json")) {
 				Response response = new Response(out);
 				Book newBook = JsonHelper.toObject(parsedRequest.getMessageBody());
 				boolean flag = true;
@@ -116,11 +120,16 @@ public class RequestHandler {
 				}
 				if (flag) {
 					BookCollection.getInstance().addBook(newBook);
-					response.setStatusCode(200);
+					response.setStatusCode(201);
 				}
 				else {
 					response.setStatusCode(400);
 				}
+				response.send();
+			}
+			else {
+				Response response = new Response(out);
+				response.setStatusCode(400);
 				response.send();
 			}
 
